@@ -38,7 +38,13 @@ run: $(NAME)
 $(NAME): main.c
 	$(CC) ./libs/mongoose/mongoose.c -I./libs/mongoose $(CFLAGS) $(EFLAGS) -o $(NAME) main.c
 
+cli: $(NAME)
+	$(CC) ./libs/fort/fort.c -I./libs/fort $(CFLAGS) $(EFLAGS) -o ada cli.c
+
+install: $(NAME)
+	cp $(NAME) /usr/local/bin
+
 clean:
 	rm -rf $(NAME) *.o *.dSYM *.gcov *.gcno *.gcda *.obj *.exe *.ilk *.pdb
 
-.PHONY: run clean all
+.PHONY: run clean all cli
