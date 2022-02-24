@@ -8,7 +8,7 @@ RESET := $(shell tput -Txterm sgr0)
 # /* Binary settings */
 
 NAME ?= feminist_api
-
+CLI_NAME ?= ada
 
 # /* Compilation args */
 
@@ -29,22 +29,23 @@ START_MSG = "$(YELLOW)-> Now running the \`$(NAME)\` live at 👉 $(BLUE)$(ENDPO
 
 # /* Rules */
 
-all: $(NAME)
+all: $(NAME) cli
 
 run: $(NAME)
 	@echo $(START_MSG)
 	@$(DEBUGGER) ./$(NAME) $(ARGS)
 
 $(NAME): main.c
-	$(CC) ./libs/mongoose/mongoose.c -I./libs/mongoose $(CFLAGS) $(EFLAGS) -o $(NAME) main.c
+	@$(CC) ./libs/mongoose/mongoose.c -I./libs/mongoose $(CFLAGS) $(EFLAGS) -o $(NAME) main.c
 
 cli: $(NAME)
-	$(CC) ./libs/fort/fort.c -I./libs/fort $(CFLAGS) $(EFLAGS) -o ada cli.c
+	@$(CC) ./libs/fort/fort.c -I./libs/fort $(CFLAGS) $(EFLAGS) -o $(CLI_NAME) cli.c
 
-install: $(NAME)
+install: cli $(NAME)
 	cp $(NAME) /usr/local/bin
+	cp $(CLI_NAME) /usr/local/bin
 
 clean:
-	rm -rf $(NAME) *.o *.dSYM *.gcov *.gcno *.gcda *.obj *.exe *.ilk *.pdb
+	rm -rf $(NAME) $(CLI_NAME) *.o *.dSYM *.gcov *.gcno *.gcda *.obj *.exe *.ilk *.pdb
 
 .PHONY: run clean all cli
