@@ -2,7 +2,7 @@
 
 The Feminist API is a RESTful API implementation that provides access to randomly generated feminist quotes.
 
-This idea was originally proposed by [@PachiCodes](https://twitter.com/pachicodes). Thanks for the inspiration!
+This idea was originally proposed by [Patricia Parra](https://twitter.com/pachicodes). Thanks for the inspiration!
 
 ## Tech stack
 
@@ -11,17 +11,31 @@ This idea was originally proposed by [@PachiCodes](https://twitter.com/pachicode
 - Mongoose web server
 - OpenSSL
 
-## How to run as a development server
+## How to run
+
+- Clone this repository
+
+- Test the server execution with `make run`.
+
+### Development server
 
 Please, follow the instructions below if you intend to develop for this application.
 
 For the development server, run the following instructions:
 
-- Clone this repository
+- Run `make` to build the server
 
-Run `make` to build the server.
+- Temporarily update your path to include the current program build.
 
-Make will take care of compiling the server dependencies and will also start the server as well.
+```sh
+export PATH=$PATH:$(pwd)
+```
+
+- Now run the program by executing the `feminist_api` command.
+
+### Installing the program
+
+- You can install the program with `make install`.
 
 ### Security (optional step)
 
