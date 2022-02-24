@@ -28,11 +28,11 @@ static const char *s_cert_file = "./config/server.pem";
  * @param buffer The buffer to write the timestamp to.
  */
 static void gen_timestamp(char *buffer) {
-   time_t rawtime;
-   struct tm *info;
-   time(&rawtime);
-   info = localtime(&rawtime);
-   strftime(buffer,80,"%x - %I:%M%p", info);
+  time_t rawtime;
+  struct tm *info;
+  time(&rawtime);
+  info = localtime(&rawtime);
+  strftime(buffer,80,"%x - %I:%M%p", info);
 }
 
 /**
