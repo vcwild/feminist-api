@@ -125,7 +125,9 @@ You will need to install TLS libraries for your distribution:
 
 #### Security for Debian/Ubuntu
 
+```sh
 sudo apt-get install libssl-dev libmbedtls-dev
+```
 
 #### Security for Fedora/RHEL/CentOS
 
@@ -135,17 +137,21 @@ sudo yum install openssl-devel mbedtls-devel
 
 Other distributions may require different libraries, please check the documentation of your package manager.
 
-After installation, you can compile the dependencies and run the server as previosly mentioned [here](#development-server).
+After the installation, you can compile the dependencies and run the server as previosly mentioned [here](#development-server), but with the caveat that you need to add the TLS libraries to your execution:
+
+```sh
+make MBEDTLS_DIR=/your/path/to/mbedtls
+```
 
 ## Using the CLI
 
-The server logs can be accessed via the `ada` command line interface. This step assumes that the server is already running and your [environment path is configured](#development-server).
+The server logs can be accessed via the `ada` command line interface. This step assumes that the server is already running.
 
 ### Running the CLI from within a docker container
 
 This step assumes that you already have the [server running in a docker container](#how-to-run).
 
-Execute our CLI commands through the docker interface:
+Execute `ada` commands through the docker interface:
 
 ```sh
 docker exec -it feminist_api ada --help
