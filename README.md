@@ -1,23 +1,71 @@
-# The Feminist API
+<div>
+  <p align="center">
+    <img src=".github/static/img/rosie.png" width="200px">
+  </p>
+</div>
 
 The Feminist API is a RESTful API implementation that provides access to randomly generated feminist quotes.
 
 This idea was originally proposed by [Patricia Parra](https://twitter.com/pachicodes). Thanks for the inspiration!
 
+## Table of contents
+
+- [Tech stack](#tech-stack)
+- [How to run](#how-to-run)
+- [How to develop](#development-builds)
+- [How to use the CLI](#using-the-cli)
+- [Install the program](#install-the-program)
+- [API declaration](docs/api.md)
+- [Contribute](#contribute)
+- [License](#LICENSE)
+
 ## Tech stack
 
-- GNU Make
 - ANSI C
+- Docker
+- GNU Make
 - Mongoose web server
 - OpenSSL
 
-## Requirements
+## How to run
+
+If you want to try out the application you can run the server as a docker container. This step assumes that you have [Docker](https://docs.docker.com/engine/install/) installed.
+
+### Method 1 - Use our container build
+
+ Simply pull the image from our Docker Hub registry:
+
+```sh
+# Create a docker container with the application `feminist_api`
+docker run -p 8080:8000 -d --name feminist_api vcwild/feminist_api:latest
+
+# Open the application in your browser
+xdg-open http://localhost:8080
+```
+
+If you want to know how to use the CLI tool, you can check [this topic](#using-the-cli).
+
+### Method 2 - Manual build
+
+If you feel like it, you can build the container yourself:
+
+```sh
+docker build . -t vcwild/feminist_api:latest
+```
+
+Now you can run the container, as [previosly mentioned](#method-1---use-our-container-build).
+
+## How to develop
+
+Please, follow the instructions below only if you intend to develop for this application.
+
+### Requirements
 
 The current instance of the Feminist API project is only supported on Linux distributions.
 
 In order to compile and run the server, it is strongly recommended to get at least a **build-essential** or equivalent package module, although it might not be required, depending on your system.
 
-### DevTools for Debian/Ubuntu
+#### DevTools for Debian/Ubuntu
 
 In order to install the build essentials, run the following command:
 
@@ -25,7 +73,7 @@ In order to install the build essentials, run the following command:
 sudo apt-get install build-essential
 ```
 
-### DevTools for Fedora/RHEL/CentOS
+#### DevTools for Fedora/RHEL/CentOS
 
 The Fedora/RHEL/CentOS equivalent to the above is:
 
@@ -35,15 +83,13 @@ sudo yum install make automake gcc gcc-c++ kernel-devel
 
 Other distributions may require different libraries, please check the documentation of your package manager.
 
-## How to run
+### Development server
+
+Follow along these steps:
 
 - Clone this repository
 
 - Test the server execution with `make run`.
-
-### Development server
-
-Please, follow the instructions below if you intend to develop for this application.
 
 - Go to the root of your git clone
 
@@ -65,15 +111,11 @@ You can also run this as a background proccess:
 feminist_api &
 ```
 
-In this case, you can catch the proccess ID with the following command:
+In this case, you can end the proccess with the following command:
 
 ```sh
-pgrep feminist_api
+kill $(pgrep feminist_api)
 ```
-
-### Installing the program
-
-- It is also possible to install the program with `make install`. This will add the `feminist_api` server and the `ada` CLI to the `/usr/local/bin` directory.
 
 ### Security (optional step)
 
@@ -99,13 +141,53 @@ After installation, you can compile the dependencies and run the server as previ
 
 The server logs can be accessed via the `ada` command line interface. This step assumes that the server is already running and your [environment path is configured](#development-server).
 
-Please follow the steps below:
+### Running the CLI from within a docker container
 
-- Compile the dependencies with `make cli`.
+This step assumes that you already have the [server running in a docker container](#how-to-run).
 
-Now simply execute any CLI interaction by using the `ada` command.
+Execute our CLI commands through the docker interface:
+
+```sh
+docker exec -it feminist_api ada --help
+```
+
+You can also make an alias for that, to make this proccess easier:
+
+```sh
+alias ada="docker exec -it feminist_api ada"
+```
+
+Now you can run the CLI as if you were running it from your own terminal:
+
+```sh
+ada --help
+```
+
+### Running the CLI locally
+
+This step assumes that you followed the [how to develop](#how-to-develop) guide.
+
+Update your path with the current directory if you don't have it already:
+
+```sh
+export PATH=$PATH:$(pwd)
+```
+
+Simply execute any CLI interaction by using the `ada` command.
 
 ```sh
 # e.g. get help from the CLI
 ada --help
 ```
+
+## Install the program
+
+- It is also possible to install the program with `make install`. This will add the `feminist_api` server and the `ada` CLI to the `/usr/local/bin` directory permanently.
+
+## Contribute
+
+Enjoyed the application? Please, consider contributing to the project.
+
+## License
+
+This project is under the [GNU General Public License v3](LICENSE).
