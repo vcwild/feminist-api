@@ -35,11 +35,11 @@ run: $(NAME)
 	@echo $(START_MSG)
 	@$(DEBUGGER) ./$(NAME) $(ARGS)
 
-$(NAME): main.c
-	@$(CC) ./libs/mongoose/mongoose.c -I./libs/mongoose $(CFLAGS) $(EFLAGS) -o $(NAME) main.c
+$(NAME): ./sources/main.c
+	@$(CC) ./libs/mongoose/mongoose.c -I./libs/mongoose $(CFLAGS) $(EFLAGS) -o $(NAME) ./sources/main.c
 
 cli: $(NAME)
-	@$(CC) ./libs/fort/fort.c -I./libs/fort $(CFLAGS) $(EFLAGS) -o $(CLI_NAME) cli.c
+	@$(CC) ./libs/fort/fort.c -I./libs/fort -I./includes $(CFLAGS) $(EFLAGS) -o $(CLI_NAME) ./sources/cli.c
 
 install: cli $(NAME)
 	cp $(NAME) /usr/local/bin
