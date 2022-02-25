@@ -1,0 +1,12 @@
+# License Agreement
+
+The following dependencies are being vendorized under fair use, also these dependencies do not agree to any of the GPL v3 terms.
+
+Please note that these projects are not guaranteed to be maintained.
+
+Also please, give fair credits to the original authors of these dependencies:
+
+- [Mongoose](https://github.com/cesanta/mongoose)
+- [Libfort](https://github.com/seleznevae/libfort)
+
+Copyright (c) 2022 Victor Wildner.
