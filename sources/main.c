@@ -1,17 +1,3 @@
-// Copyright (c) 2020 Cesanta Software Limited
-// All rights reserved
-//
-// HTTP server example. This server serves both static and dynamic content.
-// It opens two ports: plain HTTP on port 8000 and HTTP on port 8443.
-// It implements the following endpoints:
-//    /api/f1 - respond with JSON string {"result": 123}
-//    /api/f2/:id - wildcard example, respond with JSON string {"result": "URI"}
-//    any other URI serves static files from s_root_dir
-//
-// To enable SSL/TLS (using self-signed certificates in PEM files),
-//    1. make MBEDTLS_DIR=/path/to/your/mbedtls/installation
-//    2. curl -k https://127.0.0.1:8443
-
 #include "mongoose.h"
 #include <time.h>
 
@@ -20,7 +6,6 @@ static const char *s_https_addr = "https://0.0.0.0:8443";  // HTTPS port
 static const char *s_log_file = "./logs/server.log";
 static const char *s_events_log_file = "./logs/events.csv";
 static const char *s_cert_file = "./config/server.pem";
-// static const char *s_root_dir = ".";
 
 /**
  * @brief Generates a formatted timestamp for the current system local time.
@@ -49,8 +34,14 @@ static void gen_event_log(const char *logpath, const char *method_path_pair) {
   fclose(fp);
 }
 
-// We use the same event handler function for HTTP and HTTPS connections
-// fn_data is NULL for plain HTTP, and non-NULL for HTTPS
+/**
+ * @brief A handler function to communicate with the client.
+ *
+ * @param c A mongoose connection object.
+ * @param ev The environment variable.
+ * @param ev_data The data from the environment variable.
+ * @param fn_data The function data.
+ */
 static void fn(struct mg_connection *c, int ev, void *ev_data, void *fn_data) {
   (void) fn_data; // Unused
   if (ev == MG_EV_ACCEPT && fn_data != NULL) {
@@ -86,7 +77,13 @@ static void fn(struct mg_connection *c, int ev, void *ev_data, void *fn_data) {
   }
 }
 
-
+/**
+ * @brief Generates logs to the given path.
+ *
+ * @param buf The buffer to write the logs to.
+ * @param len The length of the buffer.
+ * @param ud The file pointer to write to.
+ */
 static void log_to_file(const void *buf, size_t len, void *ud)
 {
   fwrite(buf, 1, len, (FILE *)ud);
