@@ -105,13 +105,13 @@ export PATH=$PATH:$(pwd)
 
 This command will bind your terminal to the server and wait for requests.
 
-You can also run this as a background proccess:
+You can also run this as a background process:
 
 ```sh
 feminist_api &
 ```
 
-In this case, you can end the proccess with the following command:
+In this case, you can end the process with the following command:
 
 ```sh
 kill $(pgrep feminist_api)
@@ -157,7 +157,7 @@ Execute `ada` commands through the docker interface:
 docker exec -it feminist_api ada --help
 ```
 
-You can also make an alias for that, to make this proccess easier:
+You can also make an alias for that, to make this process easier:
 
 ```sh
 alias ada="docker exec -it feminist_api ada"
