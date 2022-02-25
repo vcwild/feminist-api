@@ -40,11 +40,11 @@ static void gen_timestamp(char *buffer) {
  *
  * @param logpath The path of the file to log to. The file will be written using CSV standard.
  */
-static void gen_root_event_log(const char *logpath) {
+static void gen_event_log(const char *logpath, const char *method_path_pair) {
   char buffer[80];
   FILE *fp = fopen(logpath, "a+");
   gen_timestamp(buffer);
-  strcat(buffer, ",GET,ROOT\n");
+  strcat(buffer, method_path_pair);
   fputs(buffer, fp);
   fclose(fp);
 }
@@ -62,13 +62,20 @@ static void fn(struct mg_connection *c, int ev, void *ev_data, void *fn_data) {
   } else if (ev == MG_EV_HTTP_MSG) {
     struct mg_http_message *msg = (struct mg_http_message *) ev_data;
     if (mg_http_match_uri(msg, "/")) {
-      gen_root_event_log(s_events_log_file);
+      gen_event_log(s_events_log_file, ",GET,ROOT\n");
       mg_http_reply(
         c, 200, "Content-type: application/json\r\n",
         "{\"message\": \"%s\", \"author\": \"%s\"}\n",
         "It took me quite a long time to develop a voice,\
  and now that I have it, I am not going to be silent.",
         "Madeleine Albright"
+      );
+    } else if (mg_http_match_uri(msg, "/mock")) {
+      gen_event_log(s_events_log_file, ",GET,MOCK\n");
+      mg_http_reply(
+        c, 200, "Content-type: application/json\r\n",
+        "{\"message\": \"%s\"}\n",
+        "Hello mock!!"
       );
     } else {
       mg_http_reply(
