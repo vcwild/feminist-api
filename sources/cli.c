@@ -156,6 +156,7 @@ static int clear_event_log(char *filename)
   }
   fputs(buffer, fp);
   fclose(fp);
+  fprintf(stdout, "Clearing server events log...\n");
   return 0;
 }
 
