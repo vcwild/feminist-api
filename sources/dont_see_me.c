@@ -1,11 +1,11 @@
 #include "mongoose.h"
 
-#define MAX_LENGTH 1024
+#define BUFFER_LENGTH_MAX 1024
 
 // TODO: develop a proper database and parsing
 // for this implementation that would solve both front-end and back-end.
 
-static int gen_random_pos(const char message_pairs[][3][MAX_LENGTH]) {
+static int gen_random_pos(const char message_pairs[][3][BUFFER_LENGTH_MAX]) {
   int pairs_iter = 0;
   while(**message_pairs[pairs_iter])
     pairs_iter++;
@@ -14,7 +14,7 @@ static int gen_random_pos(const char message_pairs[][3][MAX_LENGTH]) {
 
 void dispatch_quote(struct mg_connection *c) {
   char *json_template = "{\"message\": \"%s\", \"author\": \"%s\"}\n";
-  const char message_pairs[][3][MAX_LENGTH] = {
+  const char message_pairs[][3][BUFFER_LENGTH_MAX] = {
     {"It took me quite a long time to develop a voice, and now that I have it, I am not going to be silent.","Madeleine Albright"},
     {"I raise up my voice—not so that I can shout, but so that those without a voice can be heard. We cannot all succeed when half of us are held back.", "Malala Yousafzai"},
     {"A woman with a voice is, by definition, a strong woman", "Melinda Gates"},

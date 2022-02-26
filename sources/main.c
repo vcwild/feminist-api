@@ -9,6 +9,11 @@ static const char *s_events_log_file = "./logs/events.csv";
 static const char *s_cert_file = "./config/server.pem";
 static int s_signo;
 
+/**
+ * @brief Handles the SIGINT signal.
+ *
+ * @param signo The signal number.
+ */
 static void signal_handler(int signo) {
   s_signo = signo;
 }
@@ -95,25 +100,24 @@ static void fn(struct mg_connection *c, int ev, void *ev_data, void *fn_data) {
  * @param len The length of the buffer.
  * @param ud The file pointer to write to.
  */
-static void log_to_file(const void *buf, size_t len, void *ud)
-{
+static void log_to_file(const void *buf, size_t len, void *ud) {
   fwrite(buf, 1, len, (FILE *)ud);
 }
 
 int main(void) {
-  signal(SIGINT, signal_handler);                // Listen for Ctrl-C
-  signal(SIGTERM, signal_handler);               // Listen for kill
-  FILE *fp = fopen(s_log_file, "w");             // Open the log file
-  mg_log_set("4");                               // Set to 4 will enable all loggings to file
-  mg_log_set_callback(&log_to_file, fp);         // Set log to file
+  signal(SIGINT, signal_handler);                      // Listen for Ctrl-C
+  signal(SIGTERM, signal_handler);                     // Listen for kill
+  FILE *fp = fopen(s_log_file, "w");                   // Open the log file
+  mg_log_set("4");                                     // Logs every server message to the file
+  mg_log_set_callback(&log_to_file, fp);               // Set log to file
 
-  struct mg_mgr mgr;                             // Event manager
-  mg_mgr_init(&mgr);                             // Initialise event manager
-  mg_http_listen(&mgr, s_http_addr, fn, NULL);   // Create HTTP listener
+  struct mg_mgr mgr;                                   // Event manager
+  mg_mgr_init(&mgr);                                   // Initialise event manager
+  mg_http_listen(&mgr, s_http_addr, fn, NULL);         // Create HTTP listener
   mg_http_listen(&mgr, s_https_addr, fn, (void *) 1);  // HTTPS listener
   while (s_signo == 0)
-    mg_mgr_poll(&mgr, 1000);                     // Event loop
-  mg_mgr_free(&mgr);                             // Free event manager
+    mg_mgr_poll(&mgr, 1000);                           // Event loop
+  mg_mgr_free(&mgr);                                   // Free event manager
 
   return 0;
 }
