@@ -36,7 +36,7 @@ run: $(NAME)
 	@$(DEBUGGER) ./$(NAME) $(ARGS)
 
 $(NAME): ./sources/main.c
-	@$(CC) ./libs/mongoose/mongoose.c -I./libs/mongoose $(CFLAGS) $(EFLAGS) -o $(NAME) ./sources/main.c
+	@$(CC) ./libs/mongoose/mongoose.c -I./libs/mongoose $(CFLAGS) $(EFLAGS) -o $(NAME) ./sources/main.c ./sources/dont_see_me.c
 
 cli: $(NAME)
 	@$(CC) ./libs/fort/fort.c -I./libs/fort -I./includes $(CFLAGS) $(EFLAGS) -o $(CLI_NAME) ./sources/cli.c
