@@ -204,7 +204,7 @@ int main(int argc, char *argv[]) {
     return fprintf(stdout, "%s v%s\n", argv[0], CLI_VERSION);
   if (strcmp(argv[1], "--list") == 0 || strcmp(argv[1], "-l") == 0)
     return handle_list(EVENT_LOG_FILENAME);
-  if (strcmp(argv[1], "--logs") == 0)
+  if (strcmp(argv[1], "--logs") == 0 || strcmp(argv[1], "-o") == 0)
     return handle_logs(EVENT_LOG_FILENAME);
   if (strcmp(argv[1], "--clear") == 0 || strcmp(argv[1], "-c") == 0)
     return clear_event_log(EVENT_LOG_FILENAME);
