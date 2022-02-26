@@ -1,6 +1,5 @@
 import unittest
 import subprocess
-import pytest
 
 CLI_NAME = "ada"
 
