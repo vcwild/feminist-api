@@ -70,6 +70,8 @@ static void fn(struct mg_connection *c, int ev, void *ev_data, void *fn_data) {
       dispatch_quote(c);
     } else if (mg_http_match_uri(msg, "/")) {
       gen_event_log(s_events_log_file, ",GET,ROOT\n");
+      struct mg_http_serve_opts opts = {.root_dir = "sources/pages"};
+      mg_http_serve_dir(c, msg, &opts);
     } else if (mg_http_match_uri(msg, "/mock")) {
       gen_event_log(s_events_log_file, ",GET,MOCK\n");
       mg_http_reply(
@@ -78,8 +80,10 @@ static void fn(struct mg_connection *c, int ev, void *ev_data, void *fn_data) {
         "Hello mock!!"
       );
     } else {
-      struct mg_http_serve_opts opts = {.root_dir = "sources/pages"};
-      mg_http_serve_dir(c, msg, &opts);
+      mg_http_reply(
+        c, 404, "Content-type: text/html\r\n",
+        "<html><body>We were unable to find this content.</body></html>"
+      );
     }
   }
 }
