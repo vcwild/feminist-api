@@ -1,4 +1,4 @@
-name: C/C++ CI
+name: build-test-pipeline
 
 on:
   push:
