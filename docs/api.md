@@ -7,6 +7,11 @@ The available endpoints are:
 ## /
 
 GET: Get a random quote
+Response type: text/html
+
+## /api
+
+GET: Get a random quote in JSON format
 Response type: application/json
 
 ## /mock
