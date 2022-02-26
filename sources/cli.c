@@ -65,15 +65,17 @@ static void populate_table(ft_table_t *table, int *logs) {
   char tmp[10];
   ft_write_ln(table, "HTTP Method", "PATH", "Requests", "About");
   sprintf(tmp, "%2d", logs[GET_ROOT]);
-  ft_write_ln(table, "GET", "/", tmp, "Number of GET requests to the root");
+  ft_write_ln(table, "GET", "/", tmp, "GET a random quote");
+  sprintf(tmp, "%2d", logs[GET_API]);
+  ft_write_ln(table, "GET", "/api", tmp, "GET a random quote in JSON format");
   sprintf(tmp, "%2d", logs[GET_MOCK]);
-  ft_write_ln(table, "GET", "/mock", tmp, "Number of GET requests to /mock");
+  ft_write_ln(table, "GET", "/mock", tmp, "GET information about /mock");
   sprintf(tmp, "%2d", logs[POST_MOCK]);
-  ft_write_ln(table, "POST", "/mock", tmp, "Number of POST requests to /mock");
+  ft_write_ln(table, "POST", "/mock", tmp, "POST an update to /mock");
   sprintf(tmp, "%2d", logs[PUT_MOCK]);
-  ft_write_ln(table, "PUT", "/mock", tmp, "Number of PUT requests to /mock");
+  ft_write_ln(table, "PUT", "/mock", tmp, "PUT new data in /mock");
   sprintf(tmp, "%2d", logs[DELETE_MOCK]);
-  ft_write_ln(table, "DELETE", "/mock", tmp, "Number of DELETE requests to /mock");
+  ft_write_ln(table, "DELETE", "/mock", tmp, "DELETE data from /mock");
   ft_set_cell_prop(
     table, FT_ANY_ROW, FT_ANY_COLUMN,
     FT_CPROP_TEXT_ALIGN, FT_ALIGNED_CENTER
@@ -103,6 +105,7 @@ static int handle_logs(char *filename)
 {
   int logs[ENUM_LENGTH];
   logs[GET_ROOT] = count_word_matches(filename, "GET,ROOT");
+  logs[GET_API] = count_word_matches(filename, "GET,/api");
   logs[GET_MOCK] = count_word_matches(filename, "GET,/mock");
   logs[PUT_MOCK] = count_word_matches(filename, "PUT,/mock");
   logs[DELETE_MOCK] = count_word_matches(filename, "DELETE,/mock");
