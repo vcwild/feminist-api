@@ -1,7 +1,12 @@
 <div>
-  <p align="center">
+  <div align="center">
     <img src=".github/static/img/rosie.png" width="200px">
-  </p>
+    <div align="center">
+     <img src="https://img.shields.io/github/workflow/status/vcwild/feminist-api/build-test-pipeline" />
+     <img src="https://img.shields.io/tokei/lines/github/vcwild/feminist-api"/>
+     <img src="https://img.shields.io/github/license/vcwild/feminist-api" />
+    </div>
+  </div>
 </div>
 
 The Feminist API is a RESTful API implementation that provides access to randomly generated feminist quotes.
